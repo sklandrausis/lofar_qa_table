@@ -8,8 +8,11 @@ from check_Ateam_separation import input2strlist_nomapfile
 
 from connect_to_qa_table import add_qa_note
 
-
-targets = [ {'name' : 'CasA', 'ra' : 6.123487680622104,  'dec' : 1.0265153995604648},
+            
+def generate_note_1(ms_input):
+    note = ""
+    
+    targets = [ {'name' : 'CasA', 'ra' : 6.123487680622104,  'dec' : 1.0265153995604648},
             {'name' : 'CygA', 'ra' : 5.233686575770755,  'dec' : 0.7109409582180791},
             {'name' : 'TauA', 'ra' : 1.4596748493730913, 'dec' : 0.38422502335921294},
             {'name' : 'HerA', 'ra' : 4.4119087330382163, 'dec' : 0.087135562905816893},
@@ -17,10 +20,6 @@ targets = [ {'name' : 'CasA', 'ra' : 6.123487680622104,  'dec' : 1.0265153995604
             {'name' : 'Sun'},
             {'name' : 'Jupiter'},
             {'name' : 'Moon'}]
-            
-
-def generate_note_1(ms_input):
-    note = ""
     
     msname = input2strlist_nomapfile(ms_input)[0]
     min_separation = 30
@@ -101,10 +100,34 @@ def generate_note_1(ms_input):
 	if elevations[0] < any (elevations[1:len(elevations)]):
 		note += 'Elevation of pointing is less that one of A-Team sources'
     return note
+    
+    
+def generate_note_6(prefactor_log):
+    note = ""
+	
+    bad_stations = []
+    line_index = -1
+    with open(prefactor_log) as log:
+        lines = log.readlines()
+        end_line_index = len(lines) -1
+        for line in lines:
+            line_index += 1
+            if "Overall amount of flagged data in the final data:" in line:
+                for l in range(line_index + 2, end_line_index):
+                    station = lines[l].split()[0]
+                    flag_amount = lines[l].split()[1]
+                    if "100.00%" in flag_amount:
+                        bad_stations.append(station)
+                        
+    if len(bad_stations) != 0:
+        note = "These stations are fully flagged"             
+    for s in bad_stations:
+        note += " " + s 
+    return note
 
 
-def main(ms_input):
-    note = generate_note_1(ms_input)
+def main(ms_input, prefactor_log):
+    note = generate_note_1(ms_input) + " " + generate_note_6(prefactor_log)
     if len(note) == 0:
 		note = "everything is OK"
 	
@@ -115,4 +138,5 @@ def main(ms_input):
 
 if __name__ == "__main__":
     ms_input = "L167225_SAP000_SB000_uv.MS"
-    main(ms_input)
+    prefactor_log = "Pre-Facet-Calibrator.log"
+    main(ms_input, prefactor_log)
