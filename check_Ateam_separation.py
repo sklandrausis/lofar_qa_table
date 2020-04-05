@@ -153,7 +153,8 @@ def main(ms_input, min_separation = 30, outputimage = None):
             print('Directory ' + inspection_directory + ' already exists.')
         print('Plotting A-Team elevation to: ' + outputimage)
         pylab.savefig(outputimage)
-    return 0
+
+    sys.exit(0)
 
    
 ########################################################################
