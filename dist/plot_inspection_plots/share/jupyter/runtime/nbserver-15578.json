@@ -1,0 +1,11 @@
+{
+  "base_url": "/",
+  "hostname": "localhost",
+  "notebook_dir": "/home/janis/Documents/fundamentals_of_interferometry",
+  "password": false,
+  "pid": 15578,
+  "port": 8888,
+  "secure": false,
+  "token": "f7352a0d05d13172d67c2f28c8a24199011b241bc9371011",
+  "url": "http://localhost:8888/"
+}

@@ -1,0 +1,9 @@
+<schemalist gettext-domain="gnome-shell-extensions">
+  <schema id="org.gnome.shell.extensions.window-grouper" path="/org/gnome/shell/extensions/window-grouper/">
+    <key name="application-list" type="as">
+      <default>[ ]</default>
+      <summary>Application that should be grouped</summary>
+      <description>A list of application ids</description>
+    </key>
+  </schema>
+</schemalist>

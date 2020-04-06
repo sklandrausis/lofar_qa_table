@@ -1,0 +1,37 @@
+<schemalist>
+  <schema id='org.gnome.desktop.remote-desktop' path='/org/gnome/desktop/remote-desktop/'>
+  </schema>
+  <schema id='org.gnome.desktop.remote-desktop.vnc' path='/org/gnome/desktop/remote-desktop/vnc/'>
+    <key name='view-only' type='b'>
+      <default>true</default>
+      <summary>Only allow remote connections to view the screen content</summary>
+      <description>
+	When view-only is true, remote VNC connections cannot manipulate input
+	devices (e.g. mouse and keyboard).
+      </description>
+    </key>
+    <key name='auth-method' enum='org.gnome.desktop.remote-desktop.GrdVncAuthMethod'>
+      <default>'prompt'</default>
+      <summary>Method used to authenticate VNC connections</summary>
+      <description>
+	The VNC authentication method describes how a remote connection is
+	authenticated. It can currently be done in two different ways:
+
+	 * prompt   - by prompting the user for each new connection, requiring a
+		      person with physical access to the workstation to
+		      explicitly approve the new connection.
+	 * password - by requiring the remote client to provide a known password
+      </description>
+    </key>
+    <key name='encryption' flags='org.gnome.desktop.remote-desktop.GrdVncEncryption'>
+      <default>['tls-anon']</default>
+      <summary>Allowed encryption method to use</summary>
+      <description>
+	Allowed encryption methods. Includes the following:
+
+	 * none     - no encryption
+	 * tls-anon - anonymous (unauthenticated) TLS
+      </description>
+    </key>
+  </schema>
+</schemalist>
