@@ -42,36 +42,37 @@ def plot_bandpass(bandpass_frequency, bandpass_value, station_names, rows, colum
 
 def plot_bandpass2(bandpass_frequency, time, bandpass_value, station_names, rows, columns, s_id):
     time = Time(time/60/60/24, format='mjd').value
-    a = 70 #max(bandpass_frequency) - 10
-    b = min(time)
-    f = plt.figure(figsize=(15, 15))
-    xx, yy = np.meshgrid(Time(time/60/60/24, format='mjd').value, bandpass_frequency)
+    a = max(bandpass_frequency) - 10
+    b = min(time) + 10
+    xx, yy = np.meshgrid(Time(time / 60 / 60 / 24, format='mjd').value, bandpass_frequency)
+
+    f1 = plt.figure(figsize=(50, 50))
     for stations_name in station_names:
         plt.subplot(rows, columns, station_names.index(stations_name) + 1)
-        z = bandpass_value[:, :, station_names.index(stations_name), 0]
-        z_new = z.transpose()
-        plt.text(b, a, stations_name.decode('UTF-8'))
-        plt.contourf(xx, yy, z_new)
+        z1 = bandpass_value[:, :, station_names.index(stations_name), 0]
+        z1_new = z1.transpose()
+        plt.text(b, a, stations_name.decode('UTF-8'), size='large', color="r")
+        c1 = plt.contourf(xx, yy, z1_new)
         plt.xlabel("time [MJD]")
         plt.ylabel("frequency [MHz]")
 
-    f.tight_layout()
-    plt.savefig("results_" + s_id + "/" + "bandpass_xx.png")
+    f1.colorbar(c1, cax=f1.add_axes([0.935, 0.155, 0.05, 0.7]))
+    f1.tight_layout()
+    f1.savefig("results_" + s_id + "/" + "bandpass_xx.png")
 
-    f = plt.figure(figsize=(15, 15))
-    xx, yy = np.meshgrid(Time(time/60/60/24, format='mjd').value, bandpass_frequency)
+    f2 = plt.figure(figsize=(50, 50))
     for stations_name in station_names:
         plt.subplot(rows, columns, station_names.index(stations_name) + 1)
-        z = bandpass_value[:, :, station_names.index(stations_name), 1]
-        z_new = z.transpose()
-        plt.text(b, a, stations_name.decode('UTF-8'))
-        plt.contourf(xx, yy, z_new)
+        z2 = bandpass_value[:, :, station_names.index(stations_name), 1]
+        z2_new = z2.transpose()
+        plt.text(b, a, stations_name.decode('UTF-8'), size='large', color="r")
+        c2 = plt.contourf(xx, yy, z2_new)
         plt.xlabel("time [MJD]")
         plt.ylabel("frequency [MHz]")
 
-    f.tight_layout()
-    plt.savefig("results_" + s_id + "/" + "bandpass_yy.png")
-
+    f2.colorbar(c2, cax=f2.add_axes([0.935, 0.155, 0.05, 0.7]))
+    f2.tight_layout()
+    f2.savefig("results_" + s_id + "/" + "bandpass_yy.png")
 
 
 def main(solution_file_dir):
