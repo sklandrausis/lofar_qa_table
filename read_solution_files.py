@@ -45,6 +45,10 @@ class SolutionFileInfo:
         return self.get_bandpass["bandpass"]["time"].value
 
     @property
+    def get_weight(self):
+        return self.get_bandpass["bandpass"]["weight"].value
+
+    @property
     def get_start_time(self):
         return str(Time(self.get_time[0]/60/60/24, format='mjd').to_datetime())
 
