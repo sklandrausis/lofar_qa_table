@@ -31,7 +31,7 @@ def run_process(function, *arguments):
 
 
 def plot_bandpass(bandpass_frequency, bandpass_value, weight, station_names, rows, columns, s_id, output_directory):
-    f = plt.figure(figsize=(10, 10))
+    f = plt.figure(figsize=(15, 15))
     s = 0.5
 
     for stations_name in station_names:
@@ -50,11 +50,12 @@ def plot_bandpass(bandpass_frequency, bandpass_value, weight, station_names, row
         plt.text(30, a, stations_name.decode('UTF-8'))
         plt.xlabel("frequency [MHz]")
         plt.ylabel("amplitude")
+
     f.tight_layout()
     plt.savefig(output_directory + "/results_" + s_id + "/" + "bandpass.png")
 
 
-def plot_bandpass2(bandpass_frequency, time, bandpass_value, weight, station_names, rows, columns, s_id):
+def plot_bandpass2(bandpass_frequency, time, bandpass_value, weight, station_names, rows, columns, s_id, output_directory):
     time = Time(time / 60 / 60 / 24, format='mjd').value
     a = max(bandpass_frequency) - 10
     b = min(time) + 10
@@ -71,8 +72,7 @@ def plot_bandpass2(bandpass_frequency, time, bandpass_value, weight, station_nam
         plt.ylabel("frequency [MHz]")
 
     f1.colorbar(c1, cax=f1.add_axes([0.935, 0.155, 0.05, 0.7]))
-    f1.tight_layout()
-    f1.savefig("results_" + s_id + "/" + "bandpass_xx.png")
+    f1.savefig(output_directory + "/results_" + s_id + "/" + "bandpass_xx.png")
 
     f2 = plt.figure(figsize=(50, 50))
     for stations_name in station_names:
@@ -85,7 +85,6 @@ def plot_bandpass2(bandpass_frequency, time, bandpass_value, weight, station_nam
         plt.ylabel("frequency [MHz]")
 
     f2.colorbar(c2, cax=f2.add_axes([0.935, 0.155, 0.05, 0.7]))
-    f2.tight_layout()
     f2.savefig(output_directory + "/results_" + s_id + "/" + "bandpass_yy.png")
 
 
@@ -108,8 +107,7 @@ def plot_bandpass3(bandpass_frequency, time, bandpass_value, weight, station_nam
         plt.ylabel("frequency [MHz]")
 
     f1.colorbar(c1, cax=f1.add_axes([0.935, 0.155, 0.05, 0.7]))
-    f1.tight_layout()
-    f1.savefig("results_" + s_id + "/" + "bandpass3_xx.png")
+    f1.savefig(output_directory + "/results_" + s_id + "/" + "bandpass3_xx.png")
 
     f2 = plt.figure(figsize=(50, 50))
     for stations_name in station_names:
@@ -124,7 +122,6 @@ def plot_bandpass3(bandpass_frequency, time, bandpass_value, weight, station_nam
         plt.ylabel("frequency [MHz]")
 
     f2.colorbar(c2, cax=f2.add_axes([0.935, 0.155, 0.05, 0.7]))
-    f2.tight_layout()
     f2.savefig(output_directory + "/results_" + s_id + "/" + "bandpass3_yy.png")
 
 
@@ -140,6 +137,7 @@ def main(solution_file_dir, output_directory):
 
     for solution_file in solution_files:
         sas_id = solution_file.get_sas_id
+        print("process ", sas_id)
         frequency = solution_file.get_bandpass["frequency"]
         value = solution_file.get_bandpass["value"]
         weight = solution_file.get_weight
